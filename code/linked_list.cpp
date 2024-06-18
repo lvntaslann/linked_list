@@ -3,39 +3,39 @@ using namespace std;
 
 class Node {
 public:
-    // data düğümlerin verisini tutacak
-    // node göstericisi ile kendinden sonra gelen elemana erişim için next oluşturuldu
+    // data dÃ¼ÄŸÃ¼mlerin verisini tutacak
+    // node gÃ¶stericisi ile kendinden sonra gelen elemana eriÅŸim iÃ§in next oluÅŸturuldu
     int data;
     Node* next;
 
-    // constructor fonksiyon ile parametrelerin ilk değeri atandı ve buradaki değerlere eşitlendi
+    // constructor fonksiyon ile parametrelerin ilk deÄŸeri atandÄ± ve buradaki deÄŸerlere eÅŸitlendi
     Node(const int& data = 0, Node* next = NULL) : data(data), next(next) {}
 };
 
-// elemanlara ulaşım için bir liste oluşturuldu
+// elemanlara ulaÅŸÄ±m iÃ§in bir liste oluÅŸturuldu
 class list {
-    // listenin kökünde root tutarak tüm elemanlara ulaşılmak amaçlandı
+    // listenin kÃ¶kÃ¼nde root tutarak tÃ¼m elemanlara ulaÅŸÄ±lmak amaÃ§ladÄ±k
     Node* root;
 public:
     // constructor
     list() : root(NULL) {}
 
-    // listenin başlangıcını ve sonunu göstermek için özel fonksiyonlar oluşturuldu
+    // listenin baÅŸlangÄ±cÄ±nÄ± ve sonunu gÃ¶stermek iÃ§in Ã¶zel fonksiyonlar oluÅŸturuldu
     Node* begin() const { return root; }
     Node* end() const { return NULL; }
 
-    // Listenin içeriğinin boş mu olduğunu kontrol etmek için isEmpty fonksiyonu
+    // Listenin iÃ§eriÄŸinin boÅŸ mu olduÄŸunu kontrol etmek iÃ§in isEmpty fonksiyonu
     bool isEmpty() const { return begin() == end(); }
 
-    // Listeye eleman ekleme fonksiyonu (listenin sonuna ekler)
+    // Listenin sonuna eleman ekleme
     void pushBack(const int& value) {
         if (isEmpty()) {
-            // liste boşsa yeni bir node oluştur ve gelen value'yu ata
+            // liste boÅŸsa yeni bir node oluÅŸtur ve gelen value'yu ata
             root = new Node(value);
         } else {
-            // eğer liste doluysa başlangıcı gösteren bir tmp göstericisi oluştur
-            // ve tmp null değer görene kadar next'e geçiş işlemi yap
-            // null gördükten sonra yeni bir node oluşturarak gelen value'yu ata
+            // eÄŸer liste doluysa baÅŸlangÄ±cÄ± gÃ¶steren bir tmp gÃ¶stericisi oluÅŸtur
+            // ve tmp null deÄŸer gÃ¶rene kadar next'e geÃ§iÅŸ iÅŸlemi yap
+            // null gÃ¶rdÃ¼kten sonra yeni bir node oluÅŸturarak gelen value'yu ata
             Node* tmp = begin();
             while (tmp->next != end()) {
                 tmp = tmp->next;
@@ -44,7 +44,7 @@ public:
         }
     }
 
-    // Listeye eleman ekleme fonksiyonu (listenin başına ekler)
+    // Listenin baÅŸÄ±na eleman ekleme
     void pushFront(const int& value) {
         Node* tmp = new Node(value);
         tmp->next = root;
@@ -53,79 +53,79 @@ public:
 
     // Belirli bir pozisyona eleman ekleme fonksiyonu
     void insert(int position, const int& value) {
-    	//liste boş ise başa eleman ekle
+    	//liste boÅŸ ise baÅŸa eleman ekle
         if ( position<=0) {
             pushFront(value);
             return;
         }
 		
-		//bir gösterici oluştur başlangıcı göstersin
-		//eklenicek pozisyondan bir öncesine  gelene kadar(gösterici null olmayacak) göstericiyi ilerlet
+	//baÅŸlangÄ±cÄ± gÃ¶sterecek ÅŸekilde tmp gÃ¶stericisini oluÅŸturduk
+	//eklenicek pozisyondan bir Ã¶ncesine  gelene kadar(gÃ¶sterici null olmayacak) gÃ¶stericiye kadar ilerleticek dÃ¶ngÃ¼yu hazÄ±rladÄ±k
         Node* tmp = begin();
         for (int i = 0; tmp != end() && i < position - 1; ++i) {
             tmp = tmp->next;
         }
 		
-		//gösterici eklenecek kısımdan 1 önceki adımı gösterdiği için
-		//göstericinin nexti boş ise sona eleman ekleyecek
+	//gÃ¶sterici eklenecek kÄ±sÄ±mdan 1 Ã¶nceki adÄ±mÄ± gÃ¶sterdiÄŸi iÃ§in
+	//gÃ¶stericinin nexti boÅŸ ise sona eleman ekleyecek
         if (tmp == end()) {
             pushBack(value);
         } else {
-        	//null değilse yeni bir node oluşturacak
+        	//null deÄŸilse yeni bir node oluÅŸturacak
         	/*	
-        		7 ile 5 arasında ekleyeceksek
-        		tmp eklenecek adımdan öncesini gösteriyor
-        		99 ekleyeceğiz örneğin
-        		yeni oluşan node'un içerisine value olarak 99 verdik ve göstericisine tmp->next verdik
-        		tmp normalde 7 yi gösteriyordu nexti 5 i gösteriyor böyle eleman kaybetmeden araya ekledik
-        		daha sonrada tmpnin normal göstericisini valuesi 99 olan node'mıza bağladık
+        		7 ile 5 arasÄ±nda ekleyeceksek
+        		tmp eklenecek adÄ±mdan Ã¶ncesini gÃ¶steriyor
+        		99 ekleyeceÄŸiz Ã¶rneÄŸin
+        		yeni oluÅŸan node'un iÃ§erisine value olarak 99 verdik ve gÃ¶stericisine tmp->next verdik
+        		tmp normalde 7 yi gÃ¶steriyordu nexti 5 i gÃ¶steriyor bÃ¶yle eleman kaybetmeden araya ekledik
+        		daha sonrada tmpnin normal gÃ¶stericisini valuesi 99 olan node'mÄ±za baÄŸladÄ±k
         		
 				[3] -> [6] -> [7] -> [5] -> [4]
             				 ^
             				 tmp
 
-				Yeni düğüm: [99]
+				Yeni dÃ¼ÄŸÃ¼m: [99]
         	*/
             Node* newNode = new Node(value, tmp->next);
             tmp->next = newNode;
         }
     }
 
-    // Belirli bir pozisyondan eleman çıkarma fonksiyonu
+    // Belirli bir pozisyondan eleman Ã§Ä±karma fonksiyonu
     void remove(int position) {
         if (isEmpty()) {
-            cout << "Liste boş" << endl;
+            cout << "Liste boÅŸ" << endl;
             return;
         }
 		
-		//girilen pozisyon 0 ise baştan eleman çıkartıyordur bu yüzden popFront fonksiyonu kullandık
+		//girilen pozisyon 0 ise baÅŸtan eleman Ã§Ä±kartÄ±yordur bu yÃ¼zden popFront fonksiyonu kullandÄ±k
         if (position == 0) {
             popFront();
             return;
         }
 		
-		//daha sonra yeni bir gösterici oluşturduk ve rootu gösteriyor
-		//tmpyi çıkarılacak elemandan bir öncesine kadar ilerlettik bir sonraki adım null olmayacak şekilde(null değişse bir sonraki adıma geçmesi için)
+		//daha sonra yeni bir gÃ¶sterici oluÅŸturduk ve rootu gÃ¶steriyor
+		//tmpyi Ã§Ä±karÄ±lacak elemandan bir Ã¶ncesine kadar ilerlettik bir sonraki adÄ±m null olmayacak ÅŸekilde(null deÄŸiÅŸse bir sonraki adÄ±ma geÃ§mesi iÃ§in)
         Node* tmp = begin();
         for (int i = 0; tmp->next != end() && i < position - 1; ++i) {
             tmp = tmp->next;
         }
 		
-		//örneğin 4 eleman var listede ve pozisyon olarak kullanıcı 5 girdi tmp->next 5. olucak ve içerisi null olduğu için daha doğrusu böyle bir kısım olmadığı için bir hata döndürecek
+		//Ã¶rneÄŸin 4 eleman var listede ve pozisyon olarak kullanÄ±cÄ± 5 girdi tmp->next 5. olucak ve iÃ§erisi null olduÄŸu iÃ§in daha doÄŸrusu bÃ¶yle bir kÄ±sÄ±m olmadÄ±ÄŸÄ± iÃ§in bir hata dÃ¶ndÃ¼recek
         if (tmp->next == end()) {
-            cout << "Pozisyon listede mevcut değil" << endl;
+            cout << "Pozisyon listede mevcut deÄŸil" << endl;
         } else {
         	/*
-        	örneğin 99 elemanını çıkarıcaz
-        	tmp çıkarılacak elemandan öncekini gösteriyordu
-        	yeni bir node oluşturduk ve tmpnin nextini atadık yani 99unu gösteriyor 
-        	daha sonra yeni nodun yani çıkarılacak olan elemandan sonraki gelen elamnı tmp->next = nodeToRemove->next bu işlemi yaparak tmp ye tanıttık
-        	artık 7 ile 99 arasında bağlantı kalmadığı için 99u bellekten tahsis ettik
+        	Ã¶rneÄŸin 99 elemanÄ±nÄ± Ã§Ä±karÄ±caz
+        	tmp Ã§Ä±karÄ±lacak elemandan Ã¶ncekini gÃ¶steriyordu
+        	yeni bir node oluÅŸturduk ve tmpnin nextini atadÄ±k yani 99unu gÃ¶steriyor 
+        	daha sonra yeni nodun yani Ã§Ä±karÄ±lacak olan elemandan sonraki gelen elamnÄ± tmp->next = nodeToRemove->next bu iÅŸlemi yaparak tmp ye tanÄ±ttÄ±k
+        	artÄ±k 7 ile 99 arasÄ±nda baÄŸlantÄ± kalmadÄ±ÄŸÄ± iÃ§in 99u bellekten tahsis ettik
         	[3] -> [6] -> [7] -> [99] -> [5] -> [4]
             			 ^      ^
-             			tmp   tmp->next (çıkarılacak düğüm)
+             			tmp   tmp->next (Ã§Ä±karÄ±lacak dÃ¼ÄŸÃ¼m)
 
-			Çıkarılacak düğüm: [99]
+			Ã‡Ä±karÄ±lacak dÃ¼ÄŸÃ¼m: [99]
 			*/
             Node* nodeToRemove = tmp->next;
             tmp->next = nodeToRemove->next;
@@ -133,20 +133,20 @@ public:
         }
     }
 
-    // Listenin ilk elemanını yazdırma fonksiyonu
+    // Listenin ilk elemanÄ±nÄ± yazdÄ±rma fonksiyonu
     void frontDataPrint() {
         if (isEmpty()) {
-            cout << "Liste boş" << " ";
+            cout << "Liste boÅŸ" << " ";
         } else {
             cout << "Listenin ilk elemani: " << begin()->data << endl;
         }
     }
 
-    // Listenin son elemanını yazdırma fonksiyonu
+    // Listenin son elemanÄ±nÄ± yazdÄ±rma fonksiyonu
     void backDataPrint() {
         Node* tmp = begin();
         if (isEmpty()) {
-            cout << "Liste boş" << " ";
+            cout << "Liste boÅŸ" << " ";
         } else {
             while (tmp->next != NULL) {
                 tmp = tmp->next;
@@ -155,19 +155,19 @@ public:
         }
     }
 
-    // Listenin son elemanını çıkarma fonksiyonu
+    // Listenin son elemanÄ±nÄ± Ã§Ä±karma fonksiyonu
     void popBack() {
         if (isEmpty()) {
-            cout << "Liste boş" << " ";
+            cout << "Liste boÅŸ" << " ";
         } else if (begin()->next == end()) {
-        	//burada liste tek elemandan oluşuyosa başlangıcı da sonuda o olacağı için o elemanı sildik yani root başlangıcı gösterdiği için rootu bellekten silip null yaptık
+        	//burada liste tek elemandan oluÅŸuyosa baÅŸlangÄ±cÄ± da sonuda o olacaÄŸÄ± iÃ§in o elemanÄ± sildik yani root baÅŸlangÄ±cÄ± gÃ¶sterdiÄŸi iÃ§in rootu bellekten silip null yaptÄ±k
             delete root;
             root = NULL;
         } else {
-        	//birden fazla eleman varsada yeni bir node oluşturduk ve ilk elemandan başlattık
-        	//tmp her seferinden kendin 2 sonrakini kontrol ediyor yani 3-4-5 olarak 3 eleman olsa 3 e kadar gelicek 3ün nextinin nexti dolu olduğu için 4 e geçicek daha sonrası null olduğu için burada kalıcak
-        	//buna bakarken döngüde hep tmpyi kaydırıyoruz
-        	//daha sonra 4 sondan bir önceki adımı gösterdiği için 4ün bir sonrakini yani 5. elemani siliyoruz
+        	//birden fazla eleman varsada yeni bir node oluÅŸturduk ve ilk elemandan baÅŸlattÄ±k
+        	//tmp her seferinden kendin 2 sonrakini kontrol ediyor yani 3-4-5 olarak 3 eleman olsa 3 e kadar gelicek 3Ã¼n nextinin nexti dolu olduÄŸu iÃ§in 4 e geÃ§icek daha sonrasÄ± null olduÄŸu iÃ§in burada kalÄ±cak
+        	//buna bakarken dÃ¶ngÃ¼de hep tmpyi kaydÄ±rÄ±yoruz
+        	//daha sonra 4 sondan bir Ã¶nceki adÄ±mÄ± gÃ¶sterdiÄŸi iÃ§in 4Ã¼n bir sonrakini yani 5. elemani siliyoruz
             Node* tmp = begin();
             while (tmp->next->next != NULL) {
                 tmp = tmp->next;
@@ -177,13 +177,13 @@ public:
         }
     }
 
-    // Listenin ilk elemanını çıkarma fonksiyonu
+    // Listenin ilk elemanÄ±nÄ± Ã§Ä±karma fonksiyonu
     void popFront() {
         if (isEmpty()) {
-            cout << "Liste Boş" << endl;
+            cout << "Liste BoÅŸ" << endl;
         } else {
-        	//yeni node başlangıcı gösteriyor
-        	//rootta başlangıcı gösteriyordu onu 2.elemana aldık
+        	//yeni node baÅŸlangÄ±cÄ± gÃ¶steriyor
+        	//rootta baÅŸlangÄ±cÄ± gÃ¶steriyordu onu 2.elemana aldÄ±k
         	//ve tmpyi sildik
             Node* tmp = begin();
             root = tmp->next;
@@ -191,11 +191,11 @@ public:
         }
     }
 
-    // Listenin tüm elemanlarını yazdırma fonksiyonu
+    // Listenin tÃ¼m elemanlarÄ±nÄ± yazdÄ±rma fonksiyonu
     void printData() {
-    	//yeni node tmp oluşturduk
-    	//root ile aynı yer olan başlangıcı gösteriyor
-    	//tmp null değerini görene kadar datasını yazdırdık ve bir adım ileriye aktardık
+    	//yeni node tmp oluÅŸturduk
+    	//root ile aynÄ± yer olan baÅŸlangÄ±cÄ± gÃ¶steriyor
+    	//tmp null deÄŸerini gÃ¶rene kadar datasÄ±nÄ± yazdÄ±rdÄ±k ve bir adÄ±m ileriye aktardÄ±k
         Node* tmp = begin();
         while (tmp != end()) {
             cout << tmp->data << endl;
@@ -209,32 +209,32 @@ int main(int argc, char** argv) {
 	/*
 	
 	
-	BU KISIM FONKSİYONLARI TEST ETTİĞİM KISIM BURAYI ÇOK KAALE ALMANA GEREK YOK
+	BU KISIM FONKSÄ°YONLARI TEST ETTÄ°ÄÄ°M KISIM BURAYI Ã‡OK KAALE ALMANA GEREK YOK
 	
 	*/
-    // Node sınıfının nesnesi oluşturuldu
-    // böylece bellekte alan tahsis edilmiş oldu ve 3 değeri atandı
+    // Node sÄ±nÄ±fÄ±nÄ±n nesnesi oluÅŸturuldu
+    // bÃ¶ylece bellekte alan tahsis edilmiÅŸ oldu ve 3 deÄŸeri atandÄ±
     Node* n1 = new Node(3);
 
-    // n2 node da oluşturuldu 
+    // n2 node da oluÅŸturuldu 
     Node* n2 = new Node(5);
 
-    // n3 node da oluşturuldu 
+    // n3 node da oluÅŸturuldu 
     Node* n3 = new Node(10);
 
-    // n1 ile gösterici işlemleri yapıldı 3--->5--->10 diye gidiyor sıra
+    // n1 ile gÃ¶sterici iÅŸlemleri yapÄ±ldÄ± 3--->5--->10 diye gidiyor sÄ±ra
     n1->next = n2;
     n2->next = n3;
 
-    // başlangıcımız n1 olduğu için başlangıcı göstericek bir tmp değişkeni için alan tahsisi gerçekleştirildi
+    // baÅŸlangÄ±cÄ±mÄ±z n1 olduÄŸu iÃ§in baÅŸlangÄ±cÄ± gÃ¶stericek bir tmp deÄŸiÅŸkeni iÃ§in alan tahsisi gerÃ§ekleÅŸtirildi
     Node* tmp = n1;
     while (tmp != NULL) {
-        // temp'in bir sonraki adımı null olana kadar yani 3.node'a gidene kadar elemanlar ekrana yazdırıldı
+        // temp'in bir sonraki adÄ±mÄ± null olana kadar yani 3.node'a gidene kadar elemanlar ekrana yazdÄ±rÄ±ldÄ±
         cout << tmp->data << endl;
         tmp = tmp->next;
     }
 
-    // Liste sınıfının nesnesi oluşturuldu
+    // Liste sÄ±nÄ±fÄ±nÄ±n nesnesi oluÅŸturuldu
     list liste;
     cout << liste.isEmpty() << endl;
 
@@ -246,7 +246,7 @@ int main(int argc, char** argv) {
     liste.pushFront(3);
     liste.printData();
 
-    // Listenin son ve ilk elemanları yazdırıldı
+    // Listenin son ve ilk elemanlarÄ± yazdÄ±rÄ±ldÄ±
     liste.backDataPrint();
     liste.frontDataPrint();
 
@@ -254,15 +254,15 @@ int main(int argc, char** argv) {
     liste.insert(2, 99);
     liste.printData();
 
-    // Belirli bir pozisyondan eleman çıkarıldı
+    // Belirli bir pozisyondan eleman Ã§Ä±karÄ±ldÄ±
     liste.remove(3);
     liste.printData();
 
-    // Listenin son elemanı çıkarıldı
+    // Listenin son elemanÄ± Ã§Ä±karÄ±ldÄ±
     liste.popBack();
     liste.printData();
 
-    // Listenin ilk elemanı çıkarıldı
+    // Listenin ilk elemanÄ± Ã§Ä±karÄ±ldÄ±
     liste.popFront();
     liste.printData();
 }
